@@ -1,0 +1,65 @@
+{% extends 'base2.html' %}
+{% load humanize %}
+
+{% block title %}
+Manage Portfolio
+{% endblock %}
+
+{% block content %}
+    <br>
+    <h2>Portfolio Summary</h2>
+    <hr>
+    <form method="POST" action="{% url 'portfolio' %}" class="form-inline my-2 my-lg-0">
+        {% csrf_token %}
+        <input class="form-control mr-sm-2" type="add" placeholder="Stock Ticker or Name" aria-label="Add" name="ticker">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Add Stock</button>
+    </form>
+    <br>
+    {% block messages %}
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">  <!-- singular -->
+                <a class="close" data-dismiss="alert">×</a>
+                {{ message|safe }}
+            </div>
+        {% endfor %}
+    {% endif %}
+    {% endblock %}
+
+    {% if stockdata %}
+
+     <table class="table table-striped table-bordered table-hover table-sm">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">Symbol</th>
+            <th scope="col">Company</th>
+            <th scope="col">Price</th>
+            <th scope="col">Previous Close</th>
+            <th scope="col">Market Cap</th>
+            <th scope="col">Return YTD</th>
+            <th scope="col">PE Ratio</th>
+            <th scope="col">52Wk High</th>
+            <th scope="col">52Wk Low</th>
+            <th scope="col">Delete Stock</th>
+          </tr>
+        </thead>
+        <tbody>
+            {% for stock in stockdata %}
+            <tr>
+                <td>{{stock.symbol}}</td>
+                <td>{{stock.companyName}}</td>
+                <td>${{stock.latestPrice |floatformat:-2 }}</td>
+                <td>${{stock.previousClose |floatformat:-2 }}</td>
+                <td>${{stock.marketCap |intcomma }}</td>
+                <td>{{stock.ytdChange | floatformat:-2 }}</td>
+                <td>{{stock.peRatio}}</td>
+                <td>${{stock.week52High}}</td>
+                <td>${{stock.week52Low}}</td>
+                <td><a href="{% url 'delete_stock' stock.symbol %}" class="btn btn-outline-danger btn-sm">X</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+      </table>
+    {% endif%}
+{% endblock %}
+

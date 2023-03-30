@@ -1,0 +1,142 @@
+
+{% extends 'base2.html' %}
+{% load static%}
+
+{% block title %}
+Stock Portfolio
+{% endblock %}
+
+{% block content %}
+<div class="body"style="background-color:black ; background-size: cover";>
+ 
+
+    <br>
+    
+    {% if stocks and not stocks.Error %}
+    <div class="list" style="text-align: center;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color:orange;
+    font-size: 25px;
+    font-family:Arial;
+    ">
+     <h1 style="color:black; background: orange;">{{stocks.companyName}}</h1><br>
+        <p style="background: black;">
+            Symbol : {{stocks.symbol}}<br>
+            Primary Exchange : {{stocks.primaryExchange}}<br><br>
+            Open : {{stocks.open}}<br>
+            Close : {{stocks.close}}<br>
+            High : {{stocks.high}}<br>
+            Low : {{stocks.low}}<br><br>
+            Latest Price : {{stocks.latestPrice}}<br>
+            Previous Close : {{stocks.previousClose}}<br>
+           Market Cap :{{stocks.marketCap}}<br>
+            PE Ratio : {{stocks.peRatio}}<br><br>
+            Week52High : {{stocks.week52High}}<br>
+            Week52Low : {{stocks.week52Low}}<br><br>
+            YTD Change : {{stocks.ytdChange}}<br>
+            </p>
+        
+       
+        
+    {% elif stocks.Error %}
+        <p>{{stocks.Error}}</p>
+ </div>
+ 
+    {% else %}
+    
+      
+
+    <div class="banner"> 
+        <div class="inner_box">
+            <h1>Welcome To StockeX</h1>
+        <br>
+        <p>Let's start your journey of investment</p>
+        
+        <p>Analayse numbers and dive into the ocean of investment</p>
+        <br>
+        </div>
+        <br>
+            <a class="btn btn-success btn-lg" href="{% url 'portfolio' %}" role="button">Let's get started</a>
+            </p>
+            </div>
+            </div>
+        
+        <style>
+    
+    *{
+        margin : 0;
+        padding:0;
+        overflow: hidden;
+    }
+ 
+.inner_box{
+    max-width: 780px;
+    max-height: 800px;
+    position:relative;
+    display:block;
+    top:20%;
+    left:26%;
+    transform:translate(-50%, -50%);
+    background: rgba(155,155,155, .4);
+    box-shadow : 0 15px 20px rgba(0,0,0, .2);
+
+
+}
+.inner_box h1{
+
+    color : orange;
+    text-align: center;
+    background: black;
+}
+.inner_box p{
+    color : white;
+    background: orange;
+}
+.banner{
+    background: linear-gradient(to top, rgba(0,0,0,0.5)50%,rgba(0,0,0,0.5)50%), url('{% static "images/2.jpg" %}');
+    width: 100%;
+    height : 100vh; 
+    background-position: center;
+    -webkit-background-size: cover;
+    background-size: cover;
+    display : -webkit-flex;
+    display : -moz-flex;
+    display: -ms-flex;
+    display: -o-flex;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    font-size: 2vw;
+    color :black;
+    font-family: arial;
+}
+.body{
+   
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    background-color: black;
+
+}
+.navbar navbar-expand-lg navbar-dark bg-dark
+{
+    color:aliceblue
+    
+}
+.list{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    left:100px;
+    text-align: center;
+}
+
+ </style>
+    {% endif %}
+{% endblock %}
+

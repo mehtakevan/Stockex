@@ -1,0 +1,100 @@
+
+{% extends 'base2.html' %}
+{% load static %}
+
+{% block title %}
+About
+{% endblock %}
+
+{% block content %}
+
+ <div class="body"style="background-color:black";> 
+    <div class="description-container">
+  <div class="container">
+      <!-- <img src="{% static 'images/k.jpg'%}">  -->
+        <h1>Project Insight</h1>
+        <p>
+            <ul>
+                <li>StockeX Project has been created using Python Language , cascading stylesheet and Hypertext markup language.</li>
+                <br>  
+                <li>The project has used Django-3 which is a high-level Python Web framework that encourages rapid development and clean, pragmatic design.</li>
+                <br>
+                <li>Our Project hepls a user to find stock rates also helps to find out the opening and closing price of previous session of market with the help of IEXTrading API</li>
+                <br>
+                <li>What makes our project different from others is that it very easy to use and enlists the details required for the interested stocks</li>
+                <br>
+            </ul>
+            </p>
+            <br>
+            
+        
+             <!-- <img src="{% static 'images/bir.jpg'%}"> -->
+             <h1> Security Features</h1>
+            <p><ul>
+                <li>User's Security is the biggest concern of today's world so to overcome this threat we have implemented email verification feature. </li>
+                <br>
+                <li>When a user registers for the first time , an email verification is sended to the registered  email address.</li>
+                
+                </ul>
+                </p>
+                <br>
+                <br>
+                <h1>The Team</h1></div>
+            
+       
+            </div>
+            <br><br>
+            <div class="first">
+            <img src="{% static 'images/k.jpg'%}"><span>
+            <img src="{% static 'images/bir.jpg'%}" style="float:inline-end;"><br><br>
+            <p style="color: aliceblue;">
+                Kevan Mehta
+            <a href="https://www.linkedin.com/in/kevan-mehta-18b557228/"><img style="width:50px;height: 40px; top:80px;float:left;" src="{% static 'images/linkedin.png'%}" alt="Linkedin Profile"></a> <span>
+            <a href="https://www.linkedin.com/in/birva-patel-a7485723a/"><img style="width:50px;height: 40px; top:80px;float:inline-end;" src="{% static 'images/linkedin.png'%}" alt="Linkedin Profile"></a>
+            Birva Patel
+        </p>
+        </div>
+        <br><br>
+
+<style>
+    *{
+        margin:0;
+        padding:0;
+        background-color:black;
+        
+       
+    }
+    .description-container{
+        max-width: 1800px;
+        height: 500px;
+        margin: 40px auto 20px;
+        background-size: cover;
+        color:aliceblue;
+    } 
+    .description-container a{
+        float : left;
+        width:50px;
+    }
+    .second img{
+        height:300px;
+        width:250px;
+        margin-left: 150px;
+
+    }
+    .first img{
+        height:250px;
+        width:250px;
+        margin-left: 180px;
+        
+    }
+   .container{
+    font-family : Arial;
+    font-size : 18px;
+    color :white;
+
+   }
+   .container h1{
+    color : orange;
+   }
+    </style>
+{% endblock %}
