@@ -128,10 +128,10 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
-EMAIL_HOST_USER = '21ceuos059@ddu.ac.in'
-EMAIL_HOST_PASSWORD = 'kevan$220022'
+EMAIL_HOST_USER = 'gmail.com'
+EMAIL_HOST_PASSWORD = 'password'
 
 #iexcloud
-IEXCLOUD_TEST_API_TOKEN = 'sk_3718a1c3d7f84d9aaf6a47fc1322c109'
+IEXCLOUD_TEST_API_TOKEN = 'API_TOKEN'
 
 LOGIN_URL='/stocks/login'
