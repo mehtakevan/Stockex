@@ -8,3 +8,7 @@ from .models import Stock
 admin.site.register(Profile)
 
 admin.site.register(Stock)
+
+admin.site.register(funds)
+
+admin.site.register(Portfolio)
