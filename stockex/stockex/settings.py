@@ -128,14 +128,14 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
-EMAIL_HOST_USER = '21ceuos059@ddu.ac.in'
-EMAIL_HOST_PASSWORD = 'kevan$220022'
+EMAIL_HOST_USER = 'gmail.com'
+EMAIL_HOST_PASSWORD = 'password'
 
 #iexcloud
-IEXCLOUD_TEST_API_TOKEN = 'sk_5be9a5b642cf40e4a4f47175c49891f8'
+IEXCLOUD_TEST_API_TOKEN = 'API_TOKEN'
 
 LOGIN_URL='/stocks/login'
 
 #razorpay
-RAZORPAY_API_KEY = 'rzp_test_PGaTvI8af0WVfD'
-RAZORPAY_API_SECRET_KEY = 'LpEuJC8waAYqx3VWSaqEYxdG'
+RAZORPAY_API_KEY = 'API_KEY'
+RAZORPAY_API_SECRET_KEY = 'API_SECRET_KEY'
