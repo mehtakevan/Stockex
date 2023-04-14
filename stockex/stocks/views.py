@@ -9,9 +9,13 @@ from django.core.mail import send_mail
 from django.contrib.auth import authenticate,login
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
+from django.views.decorators.csrf import csrf_exempt
 
 import requests
 import json
+
+import razorpay
+from stockex.settings import RAZORPAY_API_KEY,RAZORPAY_API_SECRET_KEY
 
 from .models import Stock
 from .forms import StockForm
@@ -216,4 +220,106 @@ def delete_stock(request, stock_symbol):
     messages.success(request, f'{stock.ticker} has been deleted successfully.')
     return redirect('portfolio')
 
+@csrf_exempt
+def fund(request):
+    return render(request,'fund.html')
+
+client = razorpay.Client(auth=(RAZORPAY_API_KEY, RAZORPAY_API_SECRET_KEY))
+@csrf_exempt
+def add_funds(request):
+    order_amount = request.POST.get('funds')
+    order_currency = 'INR'
+    data = { "amount": (order_amount), "currency": order_currency, "payment_capture":1}
+    payment = client.order.create(data=data)
+    payment_order_id = payment['id']
+    context = {
+        'amount' : order_amount, 'api_key' : RAZORPAY_API_KEY,'order_id' : payment_order_id,
+    }
+    return render(request,'pay.html',context)
+
+
+@csrf_exempt
+def success_funds(request):
+    payment_id = request.POST.get('razorpay_payment_id')
+    order_id = request.POST.get('razorpay_order_id')
+    signature = request.POST.get('razorpay_signature')
+
+    user_obj = request.user
+
+    fund_obj = funds.objects.create(user=user_obj,fund=100,payment_id=payment_id,order_id=order_id,signature=signature)
+    fund_obj.save()
+    return render(request,'base2.html')
+
+def buy_sell(request):
+    return render(request,'buy_sell.html')
+
+
+def searchstock(request):
+    ticker = request.POST.get('ticker')
+    if check_valid_stock_ticker(ticker):
+        request.session['ticker'] = ticker
+        base_url = 'https://cloud.iexapis.com/stable/stock/'
+        stock = search_stock(base_url, ticker)
+        return render(request,'stock.html',{'stocks':stock})
+    else:
+        messages.warning(request, 'Please enter a valid ticker name.')
+        return render(request,'error.html')
     
+    
+def buy_sell_stock(request):
+    act = request.POST.get('action')
+    ticker = request.session['ticker']
+    to_add = request.POST.get('quantity')
+    user_obj = request.user
+    if(act == 'Buy'):
+        try:
+            stock = Portfolio.objects.get(user=user_obj,ticker=ticker)
+            print(stock)
+            if stock:
+                print(stock.quantity)
+                qnt = stock.quantity
+                qnt = qnt+int(to_add)
+                Portfolio.objects.update(quantity = qnt)
+                return redirect('portfolio2')
+            else:
+                portfolio_obj = Portfolio.objects.create(user=user_obj,ticker = ticker,quantity = to_add)
+                portfolio_obj.save()
+                return redirect('portfolio2')
+        except Exception as e:
+            print(e)
+            portfolio_obj = Portfolio.objects.create(user=user_obj,ticker = ticker,quantity = to_add)
+            portfolio_obj.save()
+            return redirect('portfolio2')
+    else:
+        try:
+            stock = Portfolio.objects.get(user=user_obj,ticker=ticker)
+            print(stock)
+            if stock:
+                print(stock.quantity)
+                qnt = stock.quantity
+                if(qnt >= int(to_add)):
+                    qnt = qnt - int(to_add)
+                    Portfolio.objects.update(quantity = qnt)    
+                    return redirect('portfolio2')
+            else:
+                # portfolio_obj = Portfolio.objects.create(user=user_obj,ticker = ticker,quantity = to_add)
+                # portfolio_obj.save()
+                return redirect(request,'error.html')
+        except Exception as e:
+            print(e)
+            # portfolio_obj = Portfolio.objects.create(user=user_obj,ticker = ticker,quantity = to_add)
+            # portfolio_obj.save()
+            return redirect(request,'error.html')
+        
+def portfolio2(request):
+    user_obj = request.user
+    stock1 = Portfolio.objects.get(user=user_obj)
+    ticker = request.session['ticker']
+    base_url = 'https://cloud.iexapis.com/stable/stock/market/batch?symbols='
+    stockdata = search_stock_batch(base_url, ticker)
+    print(stock1)
+    # stockdata.append({'quantity':stock1.quantity})
+    print(stockdata)
+    print(type(stockdata))
+    return render(request,'successful.html',{'stockdata':stockdata,'stock1':stock1})
+
