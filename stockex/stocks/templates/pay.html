@@ -1,0 +1,101 @@
+{%load static%}
+<style>
+    *{
+     margin: 0;
+            padding: 0;
+            overflow: hidden;
+    }
+    .navbar{
+    width: 1500px;
+    height: 75px;
+    margin: auto;
+    background-color: #000;
+   
+}
+.logo{
+    color: #ff7200;
+    font-size: 35px;
+    font-family: Arial;
+    padding-left: 20px;
+    float: left;
+    padding-top: 10px;
+    margin-top: 5px
+}
+     .main{
+    width: 100%;
+   background: linear-gradient(to top, rgba(0,0,0,0.5)50%,rgba(0,0,0,0.5)50%), url('{% static "images/3.jpeg"%}');
+    
+    background-position: center;
+    background-size: cover;
+    height: 100vh;
+} 
+ #rzp-button1 {
+    top:10px;
+    z-index: 1;
+  background-color: #3c8dbc;
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  font-size: 100px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#rzp-button1:hover {
+  background-color: #3071a9;
+}  
+.button{
+	
+    width: 1000px;
+    height: 200px;
+    background: linear-gradient(to top, rgba(0,0,0,0.8)50%,rgba(0,0,0,0.8)50%);
+    position: absolute;
+    top: 260px;
+    left: 10px;
+    transform: translate(0%,-5%);
+    border-radius: 10px;
+    padding: 25px;
+    color:white;
+   
+}
+    </style>
+<div class="main">
+    <div class="navbar">
+        <h2 class="logo">Stockex</h2>
+        </div>
+        </div>
+    
+<div class="button">
+<button id="rzp-button1">Pay with Razorpay</button>
+</div>
+    </div>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script>
+var options = {
+    "key": "{{api_key}}", // Enter the Key ID generated from the Dashboard
+    "amount": "{{amount}}", // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+    "currency": "INR",
+    "name": "Stockex",
+    "description": "Test Transaction",
+    "image": "https://example.com/your_logo",
+    "order_id": "{{order_id}}", //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+    "callback_url": "{% url 'success_funds' %}",
+    "prefill": {
+        "name": "Gaurav Kumar",
+        "email": "gaurav.kumar@example.com",
+        "contact": "9000090000"
+    },
+    "notes": {
+        "address": "Razorpay Corporate Office"
+    },
+    "theme": {
+        "color": "#3399cc"
+    }
+};
+var rzp1 = new Razorpay(options);
+document.getElementById('rzp-button1').onclick = function(e){
+    rzp1.open();
+    e.preventDefault();
+}
+
+</script>

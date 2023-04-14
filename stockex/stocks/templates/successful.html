@@ -1,0 +1,159 @@
+
+<!DOCTYPE html>
+{% load static%}
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portfolio</title>
+  <style>
+    * {
+            margin: 0;
+            padding: 0;
+            overflow:hidden;
+           
+            
+        }
+        
+        .navbar{
+    width: 1500px;
+    height: 75px;
+    margin: auto;
+    background-color: #000;
+   
+}
+.logo{
+    color: #ff7200;
+    font-size: 35px;
+    font-family: Arial;
+    padding-left: 20px;
+    float: left;
+    padding-top: 10px;
+    margin-top: 5px;
+}
+ body{
+ 
+    width: 100%;
+   background: linear-gradient(to top, rgba(0,0,0,0.5)50%,rgba(0,0,0,0.5)50%), url('{% static "images/10.jpeg"%}');
+    
+    background-position: center;
+    background-size: cover;
+    height: 100vh;
+}  
+table , th ,td{
+    border: 1px solid white;
+}
+
+table {
+  top:200px;
+  bottom: 100px;
+  width: 100%;
+  margin-top: 200px;
+  margin-bottom: 500px;
+  font-size: 1rem;
+  font-weight: 400;
+  text-align: left;
+  border-collapse: collapse;
+  border:1px #dee2e6;
+  margin-top:20px ;
+}
+thead {
+  background-color:black;
+  color: orange;
+}
+th {
+  padding: 0.75rem;
+  vertical-align: top;
+  border-top: 2px solid white;
+  /* border-bottom: 12px solid black; */
+
+}
+tr {
+  border-top: 1px solid black;
+}
+td {
+  padding: 0.75rem;
+  vertical-align: top;
+  border-top: 1px solid black;
+  color:white;
+}
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 26px;
+  color:#dee2e6;
+  padding-left: 50px;
+}
+
+li {
+  display: inline;
+  color:orange;
+}
+a{
+  color: orange;
+}
+.nav-link{
+ padding-right: 10px;
+}
+
+    </style>
+</head>
+<body>
+  
+    <div class="main">
+        <div class="navbar">
+            <h2 class="logo">Stockex</h2>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'home' %}">Home<span class="sr-only"></span></a>
+                  </li>
+                <li class="nav-item">
+                  <a class="nav-link " href="{% url 'portfolio' %}">WatchList<span class="sr-only"></span></a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'about' %}">About<span class="sr-only"></span></a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'fund' %}">Add fund<span class="sr-only"></span></a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'buy_sell' %}">Buy/Sell<span class="sr-only"></span></a>
+                </li>
+              </ul>
+            </div>
+            </div>
+     <table >
+        <thead >
+          <tr>
+            <th scope="col">Symbol</th>
+            <th scope="col">Company</th>
+            <th scope="col">Price</th>
+            <th scope="col">Quantity</th>
+            <th scope="col">Previous Close</th>
+            <th scope="col">PE Ratio</th>
+            <th scope="col">52Wk High</th>
+            <th scope="col">52Wk Low</th>
+            <div>
+          </tr>
+        </thead>
+        <tbody>
+            {% for stock in stockdata %}
+            <tr>
+                <td>{{stock.symbol}}</td>
+                <td>{{stock.companyName}}</td>
+                <td>${{stock.latestPrice |floatformat:-2 }}</td>
+                <td>{{stock1.quantity |floatformat:-2 }}</td>
+                <td>${{stock.previousClose |floatformat:-2 }}</td>
+                <td>${{stock.peRatio}}</td>
+                <td>${{stock.week52High}}</td>
+                <td>${{stock.week52Low}}</td>
+            </tr>
+       
+            {% endfor %}
+          </tbody>
+     </table>
+
+</body>
+</html>

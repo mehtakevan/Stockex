@@ -1,0 +1,155 @@
+
+
+<!DOCTYPE html>
+{%load static%}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buy_Sell</title>
+
+    <style>
+ * {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+        
+        .navbar{
+    width: 1500px;
+    height: 75px;
+    margin: auto;
+    background-color: #000;
+   
+}
+.logo{
+    color: #ff7200;
+    font-size: 35px;
+    font-family: Arial;
+    padding-left: 20px;
+    float: left;
+    padding-top: 10px;
+    margin-top: 5px
+}
+.main{
+    width: 100%;
+   background: linear-gradient(to top, rgba(0,0,0,0.5)50%,rgba(0,0,0,0.5)50%), url('{% static "images/8.jpeg"%}');
+    
+    background-position: center;
+    background-size: cover;
+    height: 100vh;
+}
+.form{
+	
+    width: 1000px;
+    height: 200px;
+    background: linear-gradient(to top, rgba(0,0,0,0.8)50%,rgba(0,0,0,0.8)50%);
+    position: absolute;
+    top: 260px;
+    left: 10px;
+    transform: translate(0%,-5%);
+    border-radius: 10px;
+    padding: 25px;
+    color:white;
+   
+}
+.form input{
+    width: 240px;
+    height: 35px;
+    background: transparent;
+    border-bottom: 1px solid #ff7200;
+    border-top: none;
+    border-right: none;
+    border-left: none;
+    color: #fff;
+    font-size: 15px;
+    letter-spacing: 1px;
+    margin-top: 30px;
+    font-family: sans-serif;
+}
+.form input:focus{
+    outline: none;
+}
+.btnn{
+    width: 240px;
+    height: 40px;
+    background: #ff7200;
+    border: none;
+    margin-top: 30px;
+    font-size: 18px;
+    border-radius: 10px;
+    cursor: pointer;
+    color: #fff;
+    transition: 0.4s ease;
+}
+.btnn:hover{
+    background: #fff;
+    color: #ff7200;
+}
+.btnn a{
+    text-decoration: none;
+    color: #000;
+    font-weight: bold;
+}
+
+ul{
+  list-style-type: none;
+  margin: 0;
+  padding-top: 26px;
+  color:#dee2e6;
+  padding-left: 50px;
+}
+/* li {
+  display: inline;
+  
+} */
+
+.nav-item{
+    display: inline;
+}
+a{
+  color: orange;
+}
+.nav-link{
+ padding-right: 10px;
+}
+
+
+        </style>
+</head>
+<body>
+    <div class="main">
+        <div class="navbar">
+            <h2 class="logo">Stockex</h2>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                  <li class="nav-item">
+                      <a class="nav-link" href="{% url 'home' %}">Home<span class="sr-only"></span></a>
+                    </li>
+                  <li class="nav-item">
+                    <a class="nav-link " href="{% url 'portfolio' %}">WatchList<span class="sr-only"></span></a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="{% url 'about' %}">About<span class="sr-only"></span></a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="{% url 'fund' %}">Add fund<span class="sr-only"></span></a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="{% url 'buy_sell' %}">Buy/Sell<span class="sr-only"></span></a>
+                  </li>
+                </ul>
+              </div>
+              </div>
+            </div>
+            <div class="form">
+    <form method="POST" action="{% url 'searchstock' %}">
+        {% csrf_token %}
+        <input type="text" name = 'ticker' placeholder="Enter a valid ticker name" required="true">
+        <br>
+        <!-- <input type="submit" value="Get Price"> -->
+        <button class ="btnn" button type="submit" class="btn btn-primary btn-block">Get price</button>
+    </form>
+</body>
+</html>

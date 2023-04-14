@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+{%load static%}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock</title>
+    <style> * {
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+    }
+    
+    .navbar{
+width: 1500px;
+height: 75px;
+margin: auto;
+background-color: #000;
+
+}
+.logo{
+color: #ff7200;
+font-size: 35px;
+font-family: Arial;
+padding-left: 20px;
+float: left;
+padding-top: 10px;
+margin-top: 5px
+}
+.main{
+width: 100%;
+background: linear-gradient(to top, rgba(0,0,0,0.5)50%,rgba(0,0,0,0.5)50%), url('{% static "images/3.jpeg"%}');
+
+background-position: center;
+background-size: cover;
+height: 100vh;
+}
+.form{
+
+width: 1000px;
+height: 800px;
+background: linear-gradient(to top, rgba(0,0,0,0.8)50%,rgba(0,0,0,0.8)50%);
+position: absolute;
+top: 220px;
+left: 30px;
+transform: translate(0%,-5%);
+border-radius: 10px;
+padding: 25px;
+color:white;
+
+}
+.form h3{
+width: 220px;
+font-family: sans-serif;
+left : 100px;
+text-align: center;
+color: #ff7200;
+font-size: 25px;
+background-color: #fff;
+border-radius: 10px;
+margin: 2px;
+padding: 8px;
+
+}
+.form input{
+width: 240px;
+height: 35px;
+background: transparent;
+border-bottom: 1px solid #ff7200;
+border-top: none;
+border-right: none;
+border-left: none;
+color: #fff;
+font-size: 15px;
+letter-spacing: 1px;
+margin-top: 30px;
+font-family: sans-serif;
+}
+.form input:focus{
+outline: none;
+}
+.btnn{
+width: 240px;
+height: 40px;
+background: #ff7200;
+border: none;
+margin-top: 30px;
+font-size: 18px;
+border-radius: 10px;
+cursor: pointer;
+color: #fff;
+transition: 0.4s ease;
+}
+.btnn:hover{
+background: #fff;
+color: #ff7200;
+}
+.btnn a{
+text-decoration: none;
+color: #000;
+font-weight: bold;
+}
+/* .navbar-nav mr-auto {
+  list-style-type: none;
+  margin: 0;
+  padding-top: 26px;
+  color:#dee2e6;
+  padding-left: 50px;
+} */
+ul{
+  list-style-type: none;
+  margin: 0;
+  padding-top: 26px;
+  color:#dee2e6;
+  padding-left: 50px;
+}
+/* li {
+  display: inline;
+  
+} */
+
+.nav-item{
+    display: inline;
+}
+a{
+  color: orange;
+}
+.nav-link{
+ padding-right: 10px;
+}
+
+        </style>
+</head>
+<body>
+    <div class="main">
+        <div class="main">
+            <div class="navbar">
+                <h2 class="logo">Stockex</h2>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav mr-auto">
+                      <li class="nav-item">
+                          <a class="nav-link" href="{% url 'home' %}">Home<span class="sr-only"></span></a>
+                        </li>
+                      <li class="nav-item">
+                        <a class="nav-link " href="{% url 'portfolio' %}">WatchList<span class="sr-only"></span></a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" href="{% url 'about' %}">About<span class="sr-only"></span></a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" href="{% url 'fund' %}">Add fund<span class="sr-only"></span></a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" href="{% url 'buy_sell' %}">Buy/Sell<span class="sr-only"></span></a>
+                      </li>
+                    </ul>
+                </div>
+                </div>
+
+    <br>
+    <div class="form">
+    {% if stocks and not stocks.Error %}
+         <h3 text-align="center">{{stocks.companyName}}</h3> 
+         <br>
+        
+         <div class="form-group">
+        <p >
+        <ul>
+            <li>Symbol : {{stocks.symbol}}</li><br>
+            <li>Primary Exchange : {{stocks.primaryExchange}}</li><br>
+            <li>Current Price : {{stocks.latestPrice}}</li><br>
+            <li>Previous Close : {{stocks.previousClose}}</li><br>
+            <li>PE Ratio : {{stocks.peRatio}}</li><br>
+            <li>Week52High : {{stocks.week52High}}</li><br>
+            <li>Week52Low : {{stocks.week52Low}}</li><br>
+        </ul>
+        <form method="POST" action="{% url 'buy_sell_stock' %}">
+            {% csrf_token %}
+            
+            <input type="number" name = 'quantity' placeholder="Enter the units to buy/sell">
+            <br>
+            <input type="submit" name='action' value="Buy">
+            <input type="submit" name='action' value="Sell">
+            <!-- <button class ="btnn" button type="submit" class="btn btn-primary btn-block">Buy</button>
+            <button class ="btnn" button type="submit" class="btn btn-primary btn-block">Sell</button> -->
+        </form>
+    {% elif stocks.Error %}
+        <p>{{stocks.Error}}</p>
+    {% else %}
+    
+        <div class="jumbotron">
+            <h1 class="display-4">Welcome to StockeX</h1>
+            <p class="lead">Let's start your journey of investment</p>
+            <hr class="my-4">
+            <p>Dive in and explore the share market at your fingertips</p>
+            <p class="lead">
+            <a class="btn btn-success btn-lg" href="{% url 'portfolio' %}" role="button">Let's get started</a>
+            </p>
+        </div>
+    </div>
+    {% endif%}
+</body>
+</html>
