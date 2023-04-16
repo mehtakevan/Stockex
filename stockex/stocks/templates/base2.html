@@ -27,10 +27,16 @@
                 <a class="nav-link" href="{% url 'home' %}">Home<span class="sr-only">(current)</span></a>
               </li>
             <li class="nav-item">
-              <a class="nav-link" href="{% url 'portfolio' %}">Portfolio<span class="sr-only">(current)</span></a>
+              <a class="nav-link" href="{% url 'portfolio' %}">WatchList<span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="{% url 'about' %}">About<span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'fund' %}">Add fund<span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'buy_sell' %}">Buy/Sell<span class="sr-only">(current)</span></a>
             </li>
           </ul>
           <form method="POST" action="{% url 'getstock' %}" class="form-inline my-2 my-lg-0">
